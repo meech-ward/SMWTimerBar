@@ -1,0 +1,15 @@
+source 'https://github.com/CocoaPods/Specs.git'
+use_frameworks!
+
+target 'SMWTimerBar_Example', :exclusive => true do
+  pod "SMWTimerBar", :path => "../"
+end
+
+target 'SMWTimerBar_Tests', :exclusive => true do
+  pod "SMWTimerBar", :path => "../"
+
+  pod 'Specta'
+  pod 'Expecta'
+  pod 'FBSnapshotTestCase'
+  pod 'Expecta+Snapshots'
+end

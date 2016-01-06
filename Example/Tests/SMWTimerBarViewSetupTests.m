@@ -10,7 +10,7 @@
 #import <SMWTimerBar/SMWTimerBar.h>
 #import <SMWTimerBar/SMWTimerBarSection.h>
 
-SpecBegin(TimerBarView)
+SpecBegin(TimerBarViewSetup)
 
 describe(@"Timer bar view", ^{
     
@@ -189,7 +189,6 @@ describe(@"Timer bar view", ^{
             });
         });
 
-        
     });
     
 });

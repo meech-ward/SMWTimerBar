@@ -181,38 +181,37 @@
 - (void)animateSection:(NSInteger)sectionNumber withTime:(NSInteger)sectionTime {
     if (sectionNumber < 0) {
         // Completed all animation
-        [self reset];
+        
+        // Call the did countdown delegate
+        if ([_delegate respondsToSelector:@selector(timerBarViewDidFinishCountdown:)]) {
+            [_delegate timerBarViewDidFinishCountdown:self];
+        }
+        
         return;
     }
+    
+    // Call the will countdown delegate
+    if ([_delegate respondsToSelector:@selector(timerBarView:willCountdownSection:)]) {
+        [_delegate timerBarView:self willCountdownSection:sectionNumber];
+    }
+    
+    NSString *const animationKey = @"timer_size_animation";
     
     // Get the section
     SMWTimerBarSection *section = _sections[sectionNumber];
     
     // Animate
-    [CATransaction begin];
-    [CATransaction setAnimationDuration:sectionTime];
-    [CATransaction setCompletionBlock:^{
-        CABasicAnimation *layerSizeAnimation = (CABasicAnimation *)[section.timerLayer animationForKey:@"timer_size_animation"];
-        section.timerLayer.bounds = [layerSizeAnimation.toValue CGRectValue];
-        [section.timerLayer removeAnimationForKey:@"timer_size_animation"];
+    [section animateTimerLayerWithDuration:sectionTime key:animationKey completion:^{
+        
+        // Call the did countdown delegate
+        if ([_delegate respondsToSelector:@selector(timerBarView:didCountdownSection:)]) {
+            [_delegate timerBarView:self didCountdownSection:sectionNumber];
+        }
+        
+        // Animate the next section
         [self animateSection:sectionNumber-1 withTime:sectionTime];
     }];
-    
-    [self addTimerAnimationToSection:section];
-    
-    [CATransaction commit];
 }
 
-- (void)addTimerAnimationToSection:(SMWTimerBarSection *)section {
-    
-    CABasicAnimation *layerSizeAnimation = [CABasicAnimation animationWithKeyPath:@"bounds"];
-    layerSizeAnimation.fromValue = [NSValue valueWithCGRect:CGRectMake(0, 0, CGRectGetWidth(section.frame), CGRectGetHeight(section.frame))];
-    layerSizeAnimation.toValue = [NSValue valueWithCGRect:CGRectMake(0, 0, 0, CGRectGetHeight(section.frame))];
-    
-    layerSizeAnimation.removedOnCompletion = NO;
-    layerSizeAnimation.fillMode = kCAFillModeBoth;
-    
-    [section.timerLayer addAnimation:layerSizeAnimation forKey:@"timer_size_animation"];
-}
 
 @end

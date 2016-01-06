@@ -94,6 +94,26 @@ describe(@"Timer bar section", ^{
         
     });
     
+    describe(@"when animating", ^{
+        
+        __block SMWTimerBarSection *barSection;
+        
+        beforeAll(^{
+            SMWTimerBarView *barView = [[SMWTimerBarView alloc] initWithFrame:CGRectZero numberOfSections:3];
+            barSection = [[SMWTimerBarSection alloc] initWithFrame:CGRectMake(0, 0, 30.0, 10.0) barView:barView];
+        });
+        
+        it(@"will call completion block", ^{
+            waitUntil(^(DoneCallback done) {
+                [barSection animateTimerLayerWithDuration:1.0 key:nil completion:^{
+                    expect(YES);
+                    done();
+                }];
+            });
+        });
+        
+    });
+    
 });
 
 SpecEnd

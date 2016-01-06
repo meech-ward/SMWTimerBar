@@ -9,11 +9,13 @@
 #import <UIKit/UIKit.h>
 
 @class SMWTimerBarSection;
+@protocol SMWTimerBarViewDelegate;
 
 IB_DESIGNABLE
 
 NS_ASSUME_NONNULL_BEGIN
 
+/// The view that displays the countdown animations.
 @interface SMWTimerBarView : UIView
 
 /**
@@ -27,6 +29,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)initWithCoder:(NSCoder *)aDecoder NS_DESIGNATED_INITIALIZER;
 
 /// @name Sections
+
+/// Reset the sections.
+- (void)reset;
 
 /// The number of sections that appear in the bar.
 @property (nonatomic) IBInspectable NSInteger numberOfSections;
@@ -53,6 +58,33 @@ NS_ASSUME_NONNULL_BEGIN
 /// Start the countdown animation
 - (void)startAnimating;
 
+/// @name Protocols
+
+@property (weak, nonatomic) id <SMWTimerBarViewDelegate> delegate;
+
+@end
+
+
+/// The protocol used to notify objects of happenings in the timer bar view.
+@protocol SMWTimerBarViewDelegate <NSObject>
+
+/**
+ Called when a section will start it's countdown animation.
+ @param timerBarView The view controling the countdown.
+ @param section The number of the section that will count down.
+ */
+- (void)timerBarView:(SMWTimerBarView *)timerBarView willCountdownSection:(NSInteger)section;
+/**
+ Called when a section has finished it's countdown animation.
+ @param timerBarView The view controling the countdown.
+ @param section The number of the section that just counted down.
+ */
+- (void)timerBarView:(SMWTimerBarView *)timerBarView didCountdownSection:(NSInteger)section;
+/**
+ Called when the entire view has finished it's countdown animation.
+ @param timerBarView The view controling the countdown.
+ */
+- (void)timerBarViewDidFinishCountdown:(SMWTimerBarView *)timerBarView;
 
 @end
 

@@ -10,6 +10,7 @@
 #import "SMWTimerBarView.h"
 
 #import "CATransaction+SMWUtility.h"
+#import "CALayer+SMWUtility.h"
 
 @interface SMWTimerBarSection()
 
@@ -76,19 +77,43 @@
 #pragma mark -
 #pragma mark - Animation
 
--(void)pauseLayer:(CALayer*)layer {
-    CFTimeInterval pausedTime = [layer convertTime:CACurrentMediaTime() fromLayer:nil];
-    layer.speed = 0.0;
-    layer.timeOffset = pausedTime;
+- (void)animateTimerLayerWithDuration:(NSTimeInterval)time key:(NSString *)key completion:(void(^)(void))completion {
+    
+    // Check a key exists
+    if (!key || key.length == 0) {
+        key = @"timer_size_animation";
+    }
+    
+    // Animate
+    [CATransaction begin];
+    [CATransaction setAnimationDuration:time];
+    [CATransaction setCompletionBlock:^{
+        
+        // Set the timerlayer's final state
+        CABasicAnimation *layerSizeAnimation = (CABasicAnimation *)[self.timerLayer animationForKey:key];
+        self.timerLayer.bounds = [layerSizeAnimation.toValue CGRectValue];
+        [self.timerLayer removeAnimationForKey:key];
+        
+        if (completion) {
+            completion();
+        }
+    }];
+    
+    [self addTimerAnimationWithKey:key];
+    
+    [CATransaction commit];
 }
 
--(void)resumeLayer:(CALayer*)layer {
-    CFTimeInterval pausedTime = [layer timeOffset];
-    layer.speed = 1.0;
-    layer.timeOffset = 0.0;
-    layer.beginTime = 0.0;
-    CFTimeInterval timeSincePause = [layer convertTime:CACurrentMediaTime() fromLayer:nil] - pausedTime;
-    layer.beginTime = timeSincePause;
+- (void)addTimerAnimationWithKey:(NSString *)key {
+    
+    CABasicAnimation *layerSizeAnimation = [CABasicAnimation animationWithKeyPath:@"bounds"];
+    layerSizeAnimation.fromValue = [NSValue valueWithCGRect:CGRectMake(0, 0, CGRectGetWidth(self.frame), CGRectGetHeight(self.frame))];
+    layerSizeAnimation.toValue = [NSValue valueWithCGRect:CGRectMake(0, 0, 0, CGRectGetHeight(self.frame))];
+    
+    layerSizeAnimation.removedOnCompletion = NO;
+    layerSizeAnimation.fillMode = kCAFillModeBoth;
+    
+    [self.timerLayer addAnimation:layerSizeAnimation forKey:key];
 }
 
 #pragma mark -

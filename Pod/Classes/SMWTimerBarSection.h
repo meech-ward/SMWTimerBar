@@ -42,6 +42,9 @@ NS_ASSUME_NONNULL_BEGIN
 /// Reset all the layers to their original appearance.
 - (void)reset;
 
+
+- (void)animateTimerLayerWithDuration:(NSTimeInterval)time key:(nullable NSString *)key completion:(nullable void(^)(void))completion;
+
 @end
 
 NS_ASSUME_NONNULL_END

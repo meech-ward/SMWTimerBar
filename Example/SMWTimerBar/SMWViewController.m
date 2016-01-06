@@ -10,7 +10,7 @@
 
 #import <SMWTimerBar/SMWTimerBar.h>
 
-@interface SMWViewController ()
+@interface SMWViewController () <SMWTimerBarViewDelegate>
 
 @property (weak, nonatomic) IBOutlet SMWTimerBarView *timerBar;
 
@@ -24,9 +24,10 @@
 	// Do any additional setup after loading the view, typically from a nib.
     
     _timerBar.backgroundColors = @[[UIColor blueColor]];
-    _timerBar.timerColors = @[[UIColor colorWithRed:255.0/255.0 green:0 blue:0 alpha:0.5]];
+    _timerBar.timerColors = @[[UIColor colorWithRed:255.0/255.0 green:0 blue:0 alpha:0.5], [UIColor colorWithRed:255.0/255.0 green:1.0 blue:0 alpha:0.5]];
     _timerBar.dividerColors = @[[UIColor whiteColor], [UIColor lightGrayColor], [UIColor grayColor]];
     _timerBar.time = 3;
+    _timerBar.delegate = self;
 }
 
 - (void)didReceiveMemoryWarning
@@ -37,6 +38,21 @@
 
 - (IBAction)toggleAnimation:(id)sender {
     [_timerBar startAnimating];
+}
+
+#pragma mark -
+#pragma mark - Delegate
+
+- (void)timerBarViewDidFinishCountdown:(SMWTimerBarView *)timerBarView {
+    [timerBarView reset];
+}
+
+- (void)timerBarView:(SMWTimerBarView *)timerBarView willCountdownSection:(NSInteger)section {
+    
+}
+
+- (void)timerBarView:(SMWTimerBarView *)timerBarView didCountdownSection:(NSInteger)section {
+    
 }
 
 @end

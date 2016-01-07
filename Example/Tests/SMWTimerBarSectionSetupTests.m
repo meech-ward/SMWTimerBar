@@ -11,7 +11,7 @@
 #import <SMWTimerBar/SMWTimerBarView.h>
 #import <SMWTimerBar/SMWTimerBarSection.h>
 
-SpecBegin(TimerBarSection)
+SpecBegin(TimerBarSectionSetup)
 
 describe(@"Timer bar section", ^{
     
@@ -90,26 +90,6 @@ describe(@"Timer bar section", ^{
             expect(barSection1.timerLayer.frame).to.equal(barSection2.timerLayer.frame);
             expect(barSection1.backgroundLayer.frame).to.equal(barSection2.backgroundLayer.frame);
             expect(barSection1.dividerLayer.frame).to.equal(barSection2.dividerLayer.frame);
-        });
-        
-    });
-    
-    describe(@"when animating", ^{
-        
-        __block SMWTimerBarSection *barSection;
-        
-        beforeAll(^{
-            SMWTimerBarView *barView = [[SMWTimerBarView alloc] initWithFrame:CGRectZero numberOfSections:3];
-            barSection = [[SMWTimerBarSection alloc] initWithFrame:CGRectMake(0, 0, 30.0, 10.0) barView:barView];
-        });
-        
-        it(@"will call completion block", ^{
-            waitUntil(^(DoneCallback done) {
-                [barSection animateTimerLayerWithDuration:1.0 key:nil completion:^{
-                    expect(YES);
-                    done();
-                }];
-            });
         });
         
     });

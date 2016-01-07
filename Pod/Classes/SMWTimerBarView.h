@@ -11,6 +11,13 @@
 @class SMWTimerBarSection;
 @protocol SMWTimerBarViewDelegate;
 
+typedef NS_ENUM(NSUInteger, SMWTimerBarViewState) {
+    SMWTimerBarViewStateNormal, // Setup and ready to animate
+    SMWTimerBarViewStateAnimating, // Animating
+    SMWTimerBarViewStatePaused, // Animation paused
+    SMWTimerBarViewStateCompletedAnimation, // Animation complete
+};
+
 IB_DESIGNABLE
 
 NS_ASSUME_NONNULL_BEGIN
@@ -50,13 +57,29 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSArray<UIColor *> *dividerColors;
 
 
+/// The section that is currently being animated
+@property (strong, nonatomic, nullable) SMWTimerBarSection *animatingSection;
+
 /// @name Timer
 
 /// The total countdown time, in seconds.
 @property (nonatomic) NSTimeInterval time;
 
+/// YES when the bar is animating its countdown. NO otherwise.
+@property (nonatomic) SMWTimerBarViewState state;
+
 /// Start the countdown animation
 - (void)startAnimating;
+
+/// Pause any of the section animations.
+- (void)pauseAnimations;
+
+/// Un pause any of the section animations.
+- (void)resumeAnimations;
+
+/// Stop any of the section animations.
+- (void)stopAnimations;
+
 
 /// @name Protocols
 

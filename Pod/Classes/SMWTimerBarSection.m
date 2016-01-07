@@ -77,7 +77,7 @@
 #pragma mark -
 #pragma mark - Animation
 
-- (void)animateTimerLayerWithDuration:(NSTimeInterval)time key:(NSString *)key completion:(void(^)(void))completion {
+- (void)animateTimerLayerWithDuration:(NSTimeInterval)time key:(NSString *)key completion:(void(^)(BOOL flag))completion {
     
     // Check a key exists
     if (!key || key.length == 0) {
@@ -89,13 +89,17 @@
     [CATransaction setAnimationDuration:time];
     [CATransaction setCompletionBlock:^{
         
-        // Set the timerlayer's final state
         CABasicAnimation *layerSizeAnimation = (CABasicAnimation *)[self.timerLayer animationForKey:key];
-        self.timerLayer.bounds = [layerSizeAnimation.toValue CGRectValue];
-        [self.timerLayer removeAnimationForKey:key];
+        if (layerSizeAnimation) {
+            // Set the timerlayer's final state
+            [CATransaction smw_unanimateBlock:^{
+                self.timerLayer.bounds = [layerSizeAnimation.toValue CGRectValue];
+                [self.timerLayer removeAnimationForKey:key];
+            }];
+        }
         
         if (completion) {
-            completion();
+            completion(layerSizeAnimation != nil);
         }
     }];
     
@@ -114,6 +118,19 @@
     layerSizeAnimation.fillMode = kCAFillModeBoth;
     
     [self.timerLayer addAnimation:layerSizeAnimation forKey:key];
+}
+
+- (void)pauseAnimations {
+    [_timerLayer pauseAnimations];
+}
+
+- (void)resumeAniamtions {
+    [_timerLayer resumeAniamtions];
+}
+
+- (void)stopAnimations {
+    [_timerLayer removeAllAnimations];
+    [self reset];
 }
 
 #pragma mark -

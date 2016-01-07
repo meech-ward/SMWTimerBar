@@ -7,8 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2276F9E11C3D839800603E7E /* SMWTimerBarSectionAnimationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2276F9E01C3D839800603E7E /* SMWTimerBarSectionAnimationTests.m */; };
 		2285425D1C3B55D7004E9C46 /* SMWTimerBarViewSetupTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2285425C1C3B55D7004E9C46 /* SMWTimerBarViewSetupTests.m */; };
-		228542681C3B7371004E9C46 /* SMWTimerBarSectionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 228542671C3B7371004E9C46 /* SMWTimerBarSectionTests.m */; };
+		228542681C3B7371004E9C46 /* SMWTimerBarSectionSetupTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 228542671C3B7371004E9C46 /* SMWTimerBarSectionSetupTests.m */; };
 		22A720361C3C336400222AF4 /* SMWTimerBarTimerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 22A720351C3C336300222AF4 /* SMWTimerBarTimerTests.m */; };
 		22A7204C1C3C9B5B00222AF4 /* SMWTimerBarViewDelegateMockObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 22A7204B1C3C9B5B00222AF4 /* SMWTimerBarViewDelegateMockObject.m */; };
 		500A26837981B7D5B2BD8E67 /* Pods_SMWTimerBar_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0A3671A7981E2B32EB3330D /* Pods_SMWTimerBar_Tests.framework */; };
@@ -39,8 +40,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2276F9E01C3D839800603E7E /* SMWTimerBarSectionAnimationTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMWTimerBarSectionAnimationTests.m; sourceTree = "<group>"; };
 		2285425C1C3B55D7004E9C46 /* SMWTimerBarViewSetupTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMWTimerBarViewSetupTests.m; sourceTree = "<group>"; };
-		228542671C3B7371004E9C46 /* SMWTimerBarSectionTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMWTimerBarSectionTests.m; sourceTree = "<group>"; };
+		228542671C3B7371004E9C46 /* SMWTimerBarSectionSetupTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMWTimerBarSectionSetupTests.m; sourceTree = "<group>"; };
 		22A720351C3C336300222AF4 /* SMWTimerBarTimerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMWTimerBarTimerTests.m; sourceTree = "<group>"; };
 		22A7204A1C3C9B5B00222AF4 /* SMWTimerBarViewDelegateMockObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMWTimerBarViewDelegateMockObject.h; sourceTree = "<group>"; };
 		22A7204B1C3C9B5B00222AF4 /* SMWTimerBarViewDelegateMockObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMWTimerBarViewDelegateMockObject.m; sourceTree = "<group>"; };
@@ -174,7 +176,8 @@
 			children = (
 				2285425C1C3B55D7004E9C46 /* SMWTimerBarViewSetupTests.m */,
 				22A720351C3C336300222AF4 /* SMWTimerBarTimerTests.m */,
-				228542671C3B7371004E9C46 /* SMWTimerBarSectionTests.m */,
+				228542671C3B7371004E9C46 /* SMWTimerBarSectionSetupTests.m */,
+				2276F9E01C3D839800603E7E /* SMWTimerBarSectionAnimationTests.m */,
 				22A720491C3C9B3800222AF4 /* Mocks */,
 				6003F5B6195388D20070C39A /* Supporting Files */,
 			);
@@ -421,7 +424,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				2285425D1C3B55D7004E9C46 /* SMWTimerBarViewSetupTests.m in Sources */,
-				228542681C3B7371004E9C46 /* SMWTimerBarSectionTests.m in Sources */,
+				228542681C3B7371004E9C46 /* SMWTimerBarSectionSetupTests.m in Sources */,
+				2276F9E11C3D839800603E7E /* SMWTimerBarSectionAnimationTests.m in Sources */,
 				22A720361C3C336400222AF4 /* SMWTimerBarTimerTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

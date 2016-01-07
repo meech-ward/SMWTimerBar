@@ -42,8 +42,16 @@ NS_ASSUME_NONNULL_BEGIN
 /// Reset all the layers to their original appearance.
 - (void)reset;
 
+/// Pause the timer layer.
+- (void)pauseAnimations;
 
-- (void)animateTimerLayerWithDuration:(NSTimeInterval)time key:(nullable NSString *)key completion:(nullable void(^)(void))completion;
+/// Un pause the timer layer.
+- (void)resumeAniamtions;
+
+/// Stop the timer layer.
+- (void)stopAnimations;
+
+- (void)animateTimerLayerWithDuration:(NSTimeInterval)time key:(nullable NSString *)key completion:(void(^)(BOOL flag))completion ;
 
 @end
 

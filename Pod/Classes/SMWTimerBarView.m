@@ -80,6 +80,7 @@
     for (SMWTimerBarSection *section in _sections) {
         [section reset];
     }
+    self.state = SMWTimerBarViewStateNormal;
 }
 
 #pragma mark -
@@ -175,12 +176,43 @@
     // Divide the time between the sections
     NSTimeInterval sectionTime = _time/_numberOfSections;
     
+    self.state = SMWTimerBarViewStateAnimating;
     [self animateSection:_numberOfSections-1 withTime:sectionTime];
+}
+
+- (void)pauseAnimations {
+    for (SMWTimerBarSection *section in self.sections) {
+        [section pauseAnimations];
+    }
+//    [_animatingSection pauseAnimations];
+    self.state = SMWTimerBarViewStatePaused;
+}
+
+- (void)resumeAnimations {
+//    [_animatingSection resumeAniamtions];
+    for (SMWTimerBarSection *section in self.sections) {
+        [section resumeAniamtions];
+    }
+    self.state = SMWTimerBarViewStateAnimating;
+}
+
+- (void)stopAnimations {
+    // Stop the animations
+    for (SMWTimerBarSection *section in self.sections) {
+        [section stopAnimations];
+    }
+    
+    // Cleanup
+    self.state = SMWTimerBarViewStateNormal;
+    self.animatingSection = nil;
 }
 
 - (void)animateSection:(NSInteger)sectionNumber withTime:(NSInteger)sectionTime {
     if (sectionNumber < 0) {
         // Completed all animation
+        self.state = SMWTimerBarViewStateCompletedAnimation;
+        
+        self.animatingSection = nil;
         
         // Call the did countdown delegate
         if ([_delegate respondsToSelector:@selector(timerBarViewDidFinishCountdown:)]) {
@@ -189,6 +221,8 @@
         
         return;
     }
+    
+    self.animatingSection = self.sections[sectionNumber];
     
     // Call the will countdown delegate
     if ([_delegate respondsToSelector:@selector(timerBarView:willCountdownSection:)]) {
@@ -201,15 +235,17 @@
     SMWTimerBarSection *section = _sections[sectionNumber];
     
     // Animate
-    [section animateTimerLayerWithDuration:sectionTime key:animationKey completion:^{
+    [section animateTimerLayerWithDuration:sectionTime key:animationKey completion:^(BOOL completed) {
         
         // Call the did countdown delegate
         if ([_delegate respondsToSelector:@selector(timerBarView:didCountdownSection:)]) {
             [_delegate timerBarView:self didCountdownSection:sectionNumber];
         }
         
-        // Animate the next section
-        [self animateSection:sectionNumber-1 withTime:sectionTime];
+        if (completed) {
+            // Animate the next section
+            [self animateSection:sectionNumber-1 withTime:sectionTime];
+        }
     }];
 }
 

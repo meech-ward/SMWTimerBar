@@ -35,7 +35,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="573-3N-KNM"/>
                                 </constraints>
-                                <state key="normal" title="Animate"/>
+                                <state key="normal" title="Toggle Animation"/>
                                 <connections>
                                     <action selector="toggleAnimation:" destination="whP-gf-Uak" eventType="touchUpInside" id="5bY-oK-l1x"/>
                                 </connections>

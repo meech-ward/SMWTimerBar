@@ -37,14 +37,28 @@
 }
 
 - (IBAction)toggleAnimation:(id)sender {
-    [_timerBar startAnimating];
+    switch (_timerBar.state) {
+        case SMWTimerBarViewStateAnimating:
+            [_timerBar pauseAnimations];
+            break;
+        case SMWTimerBarViewStatePaused:
+            [_timerBar resumeAnimations];
+            break;
+        case SMWTimerBarViewStateNormal:
+            [_timerBar startAnimating];
+            break;
+        case SMWTimerBarViewStateCompletedAnimation:
+            [_timerBar reset];
+            break;
+    }
 }
+
 
 #pragma mark -
 #pragma mark - Delegate
 
 - (void)timerBarViewDidFinishCountdown:(SMWTimerBarView *)timerBarView {
-    [timerBarView reset];
+//    [timerBarView reset];
 }
 
 - (void)timerBarView:(SMWTimerBarView *)timerBarView willCountdownSection:(NSInteger)section {

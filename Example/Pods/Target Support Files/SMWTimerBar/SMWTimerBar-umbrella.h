@@ -1,6 +1,6 @@
 #import <UIKit/UIKit.h>
 
-#import "CALayer+SMWUtility.h"
+//#import "CALayer+SMWUtility.h"
 #import "SMWTimerBar.h"
 #import "SMWTimerBarSection.h"
 #import "SMWTimerBarView.h"

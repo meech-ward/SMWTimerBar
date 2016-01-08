@@ -19,6 +19,9 @@
 @property (strong, nonatomic) CAShapeLayer *dividerLayer;
 @property (strong, nonatomic) UIImageView *imageView;
 
+@property (nonatomic) CGRect lastFrame;
+@property (nonatomic) NSInteger frameUpdateTimes;
+
 @end
 
 @implementation SMWTimerBarSection
@@ -40,6 +43,7 @@
 }
 
 - (void)setFrame:(CGRect)frame {
+    self.lastFrame = _frame;
     _frame = frame;
     [self updateFrames];
 }
@@ -66,10 +70,21 @@
 
 - (void)updateFrames {
     _backgroundLayer.frame = _frame;
-    _timerLayer.frame = _frame;
     _imageView.frame = _frame;
     CGFloat dividerWidth = 4.0;
     _dividerLayer.frame = CGRectMake(CGRectGetMinX(_frame)-(dividerWidth/2.0), 0, dividerWidth, CGRectGetHeight(_frame));
+    
+    if (++self.frameUpdateTimes == 1) {
+        _timerLayer.frame = _frame;
+    } else {
+        if (_timerLayer.animationKeys && _timerLayer.animationKeys.count > 0) {
+            // Currently animating
+        } else if (!CGRectEqualToRect(_timerLayer.frame, _lastFrame)) {
+            // Completed animation but was not reset
+        } else {
+            _timerLayer.frame = _frame;
+        }
+    }
 }
 
 - (void)removeFromBar {
@@ -149,6 +164,7 @@
     [_dividerLayer removeAllAnimations];
     
     // Reset the frames
+    self.frameUpdateTimes = 0;
     [CATransaction smw_unanimateBlock:^{
         [self updateFrames];
     }];

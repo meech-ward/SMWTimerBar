@@ -10,11 +10,16 @@
 
 #import "SMWTimerBarSection.h"
 
+#import "SMWDisplayLink.h"
+
 @interface SMWTimerBarView() {
     CGRect _lastFrame;
 }
 
 @property (strong, nonatomic) NSArray<SMWTimerBarSection *> *sections;
+
+/// The timer used for the animations
+@property (strong, nonatomic) SMWDisplayLink *timer;
 
 @end
 
@@ -197,8 +202,23 @@
     // Divide the time between the sections
     NSTimeInterval sectionTime = _time/_numberOfSections;
     
+    // Get the amount of width that will be taken off at each incrment
+    CGFloat sectionWidth = CGRectGetWidth(_sections[0].frame);
+    CGFloat incrementWidth = sectionWidth/(60*sectionTime);
+    
+    // Start the timer
+    self.timer = [[SMWDisplayLink alloc] initWithDuration:_time
+                                            frameInterval:1
+                                                stepBlock:^(CGFloat percentComplete) {
+        
+    }
+                                             runLoopModes:@[NSDefaultRunLoopMode]];
+    
     self.state = SMWTimerBarViewStateAnimating;
     [self animateSection:_numberOfSections-1 withTime:sectionTime];
+}
+- (void)increment {
+    
 }
 
 - (void)pauseAnimations {

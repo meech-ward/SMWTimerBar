@@ -1,0 +1,6 @@
+framework module Pods_SMWTimerBar_Tests {
+  umbrella header "Pods-SMWTimerBar_Tests-umbrella.h"
+
+  export *
+  module * { export * }
+}

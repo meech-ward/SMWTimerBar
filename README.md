@@ -1,9 +1,9 @@
 # SMWTimerBar
 
-[![CI Status](http://img.shields.io/travis/Sam Meech-Ward/SMWTimerBar.svg?style=flat)](https://travis-ci.org/Sam Meech-Ward/SMWTimerBar)
-[![Version](https://img.shields.io/cocoapods/v/SMWTimerBar.svg?style=flat)](http://cocoapods.org/pods/SMWTimerBar)
+[![CI Status](http://img.shields.io/travis/Sam Meech-Ward/SMWTimerBar.svg?style=flat)](https://travis-ci.org/meech-ward/SMWTimerBar)
+<!-- [![Version](https://img.shields.io/cocoapods/v/SMWTimerBar.svg?style=flat)](http://cocoapods.org/pods/SMWTimerBar)
 [![License](https://img.shields.io/cocoapods/l/SMWTimerBar.svg?style=flat)](http://cocoapods.org/pods/SMWTimerBar)
-[![Platform](https://img.shields.io/cocoapods/p/SMWTimerBar.svg?style=flat)](http://cocoapods.org/pods/SMWTimerBar)
+[![Platform](https://img.shields.io/cocoapods/p/SMWTimerBar.svg?style=flat)](http://cocoapods.org/pods/SMWTimerBar) -->
 
 <!-- ## Usage
 

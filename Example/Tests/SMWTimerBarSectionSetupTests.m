@@ -38,12 +38,14 @@ describe(@"Timer bar section", ^{
             expect(barSection.backgroundLayer).toNot.equal(nil);
             expect(barSection.timerLayer).toNot.equal(nil);
             expect(barSection.dividerLayer).toNot.equal(nil);
+            expect(barSection.imageView).toNot.equal(nil);
         });
         
         it(@"will be a sublayer of bar", ^{
             expect(barSection.backgroundLayer.superlayer).to.equal(barView.layer);
             expect(barSection.timerLayer.superlayer).to.equal(barView.layer);
             expect(barSection.dividerLayer.superlayer).to.equal(barView.layer);
+            expect(barSection.imageView.superview).to.equal(barView);
         });
         
     });
@@ -62,6 +64,7 @@ describe(@"Timer bar section", ^{
             expect(barSection.backgroundLayer.superlayer).to.equal(nil);
             expect(barSection.timerLayer.superlayer).to.equal(nil);
             expect(barSection.dividerLayer.superlayer).to.equal(nil);
+            expect(barSection.imageView.superview).to.equal(nil);
         });
     });
     
@@ -81,6 +84,7 @@ describe(@"Timer bar section", ^{
             barSection1.timerLayer.frame = CGRectMake(1, 2, 3, 4);
             barSection1.backgroundLayer.frame = CGRectMake(5, 6, 7, 8);
             barSection1.dividerLayer.frame = CGRectMake(9, 1, 2, 3);
+            barSection1.imageView.frame = CGRectMake(9, 1, 2, 3);
             
             // Reset section 1
             [barSection1 reset];
@@ -90,6 +94,7 @@ describe(@"Timer bar section", ^{
             expect(barSection1.timerLayer.frame).to.equal(barSection2.timerLayer.frame);
             expect(barSection1.backgroundLayer.frame).to.equal(barSection2.backgroundLayer.frame);
             expect(barSection1.dividerLayer.frame).to.equal(barSection2.dividerLayer.frame);
+            expect(barSection1.imageView.frame).to.equal(barSection2.imageView.frame);
         });
         
     });

@@ -23,9 +23,10 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     
-    _timerBar.backgroundColors = @[[UIColor blueColor]];
+    _timerBar.backgroundColors = @[[UIColor blueColor], [UIColor cyanColor]];
     _timerBar.timerColors = @[[UIColor colorWithRed:255.0/255.0 green:0 blue:0 alpha:0.5], [UIColor colorWithRed:255.0/255.0 green:1.0 blue:0 alpha:0.5]];
     _timerBar.dividerColors = @[[UIColor whiteColor], [UIColor lightGrayColor], [UIColor grayColor]];
+    _timerBar.images = @[[UIImage imageNamed:@"star-circle"], [UIImage imageNamed:@"star-outline"]];
     _timerBar.time = 3;
     _timerBar.delegate = self;
 }

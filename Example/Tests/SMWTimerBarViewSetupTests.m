@@ -188,6 +188,45 @@ describe(@"Timer bar view", ^{
                 }
             });
         });
+        
+        
+        describe(@"when updating images with the same number of sections", ^{
+            
+            __block NSArray<UIImage *> *images;
+            
+            beforeAll(^{
+                images = @[[UIImage imageNamed:@"star-circle"], [UIImage imageNamed:@"star-outline"], [UIImage imageNamed:@"star-half"], [UIImage imageNamed:@"star-outline"], [UIImage imageNamed:@"star-circle"]];
+                barView.images = images;
+            });
+            
+            it(@"will have each section with the same correct image", ^{
+                for (int i = 0; i < numberOfBarSections; ++i) {
+                    SMWTimerBarSection *section = barView.sections[i];
+                    UIImage *image = images[i];
+                    expect(section.imageView.image).to.equal(image);
+                }
+            });
+        });
+        
+        describe(@"when updating images with a smaller number of sections", ^{
+            
+            __block NSArray<UIImage *> *images;
+            
+            beforeAll(^{
+                images = @[[UIImage imageNamed:@"star-circle"], [UIImage imageNamed:@"star-outline"]];
+                barView.images = images;
+            });
+            
+            it(@"will carousell through the images to add to sections", ^{
+                int imageIndex = 0;
+                for (int i = 0; i < numberOfBarSections; ++i) {
+                    SMWTimerBarSection *section = barView.sections[i];
+                    UIImage *image = images[imageIndex];
+                    expect(section.imageView.image).to.equal(image);
+                    imageIndex = imageIndex >= images.count-1 ? 0 : imageIndex+1;
+                }
+            });
+        });
 
     });
     

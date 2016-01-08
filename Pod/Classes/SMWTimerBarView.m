@@ -152,6 +152,27 @@
     }];
 }
 
+- (void)setImages:(NSArray<UIImage *> *)images {
+    _images = images;
+    [self updateImages];
+}
+
+- (void)updateImages {
+    int imageIndex = 0;
+    for (int i = 0; i < _numberOfSections; ++i) {
+        // Get the section image view
+        SMWTimerBarSection *section = _sections[i];
+        UIImageView *imageView = section.imageView;
+        
+        // Get the image
+        UIImage *image = _images[imageIndex];
+        imageIndex = imageIndex >= _images.count-1 ? 0 : imageIndex+1;
+        
+        // Set the image
+        imageView.image = image;
+    }
+}
+
 - (void)setColors:(NSArray<UIColor *> *)colors forSectionLayers:(CALayer *(^)(SMWTimerBarSection *section))sectionLayer {
     int colorIndex = 0;
     for (int i = 0; i < _numberOfSections; ++i) {

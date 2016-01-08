@@ -17,6 +17,7 @@
 @property (strong, nonatomic) CALayer *backgroundLayer;
 @property (strong, nonatomic) CAShapeLayer *timerLayer;
 @property (strong, nonatomic) CAShapeLayer *dividerLayer;
+@property (strong, nonatomic) UIImageView *imageView;
 
 @end
 
@@ -53,16 +54,20 @@
     self.timerLayer = [CAShapeLayer layer];
     _timerLayer.anchorPoint = CGPointZero;
     self.dividerLayer = [CAShapeLayer layer];
+    self.imageView = [[UIImageView alloc] init];
+    _imageView.contentMode = UIViewContentModeCenter;
     
     // Add them to the superview
     [_barView.layer addSublayer:_backgroundLayer];
     [_barView.layer addSublayer:_timerLayer];
     [_barView.layer addSublayer:_dividerLayer];
+    [_barView addSubview:_imageView];
 }
 
 - (void)updateFrames {
     _backgroundLayer.frame = _frame;
     _timerLayer.frame = _frame;
+    _imageView.frame = _frame;
     CGFloat dividerWidth = 4.0;
     _dividerLayer.frame = CGRectMake(CGRectGetMinX(_frame)-(dividerWidth/2.0), 0, dividerWidth, CGRectGetHeight(_frame));
 }
@@ -71,6 +76,7 @@
     [self.backgroundLayer removeFromSuperlayer];
     [self.timerLayer removeFromSuperlayer];
     [self.dividerLayer removeFromSuperlayer];
+    [self.imageView removeFromSuperview];
 }
 
 

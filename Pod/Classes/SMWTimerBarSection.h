@@ -31,6 +31,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic, readonly) CAShapeLayer *timerLayer;
 /// The layer that sets the divider.
 @property (strong, nonatomic, readonly) CAShapeLayer *dividerLayer;
+/// The layer the shows the image.
+@property (strong, nonatomic, readonly) UIImageView *imageView;
 
 /// The frame of the section.
 @property (nonatomic) CGRect frame;

@@ -49,12 +49,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// The colors of each background segment.
 @property (strong, nonatomic) NSArray<UIColor *> *backgroundColors;
-/// The image that sits on the background.
-//@property (strong, nonatomic) NSArray<UIColor *> *backgroundImages;
 /// The colors of each forground segment, the peice that animates down.
 @property (strong, nonatomic) NSArray<UIColor *> *timerColors;
 /// The color of each divider between the segments.
 @property (strong, nonatomic) NSArray<UIColor *> *dividerColors;
+/// The image of each segments.
+@property (strong, nonatomic) NSArray<UIImage *> *images;
 
 
 /// The section that is currently being animated

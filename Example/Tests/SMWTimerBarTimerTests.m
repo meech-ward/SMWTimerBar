@@ -35,19 +35,6 @@ describe(@"Timer bar timing", ^{
             barView.time = 9;
             [barView startAnimating];
         });
-        
-        
-        
-//        it(@"should be animating", ^{
-//            waitUntil(^(DoneCallback done) {
-//                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//                    done();
-//                    SMWTimerBarSection *lastSection = barView.sections.lastObject;
-//                    expect(lastSection.timerLayer.animationKeys).toNot.equal(nil);
-//                    expect(lastSection.timerLayer.animationKeys.count).toNot.beGreaterThan(0);
-//                });
-//            }); 
-//        });
 
         
         it(@"will be animating", ^{
@@ -224,6 +211,7 @@ describe(@"Timer bar timing", ^{
                         expect(barCopySection.timerLayer.frame).to.equal(barSection.timerLayer.frame);
                         expect(barCopySection.backgroundLayer.frame).to.equal(barSection.backgroundLayer.frame);
                         expect(barCopySection.dividerLayer.frame).to.equal(barSection.dividerLayer.frame);
+                        expect(barCopySection.imageView.frame).to.equal(barSection.imageView.frame);
                         done();
                     }];
                 }];

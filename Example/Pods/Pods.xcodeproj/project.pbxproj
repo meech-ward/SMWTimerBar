@@ -29,8 +29,6 @@
 		1BA92E42492117F95615AA3A723462B7 /* SPTGlobalBeforeAfterEach.h in Headers */ = {isa = PBXBuildFile; fileRef = D6CF3903D943792CF71D2E59A5FE6602 /* SPTGlobalBeforeAfterEach.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		201BF9C605852822CA5A65ADE282A310 /* EXPMatcherHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 78F5D31437776FFE9BBCAE5FD37C912E /* EXPMatcherHelpers.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		204D694B03BFF3B244A6AB73FACFFC43 /* Expecta-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = FD3A245D75F8D2D0FFAD5230F5925974 /* Expecta-dummy.m */; };
-		224147F51C3F5F9A0033178C /* CALayer+SMWUtility.h in Headers */ = {isa = PBXBuildFile; fileRef = 224147F31C3F5F9A0033178C /* CALayer+SMWUtility.h */; };
-		224147F61C3F5F9A0033178C /* CALayer+SMWUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 224147F41C3F5F9A0033178C /* CALayer+SMWUtility.m */; };
 		224148431C4081290033178C /* SMWDisplayLink.h in Headers */ = {isa = PBXBuildFile; fileRef = 224148411C4081290033178C /* SMWDisplayLink.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		224148441C4081290033178C /* SMWDisplayLink.mm in Sources */ = {isa = PBXBuildFile; fileRef = 224148421C4081290033178C /* SMWDisplayLink.mm */; };
 		260BC7EED9289AF321A6F791964CE472 /* EXPMatchers+respondTo.h in Headers */ = {isa = PBXBuildFile; fileRef = 82018E76DBBAA11465301FB7614DA196 /* EXPMatchers+respondTo.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -192,8 +190,6 @@
 		1DF8BC2C6730675F74DD28A442535501 /* SPTCompiledExample.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SPTCompiledExample.m; path = Specta/Specta/SPTCompiledExample.m; sourceTree = "<group>"; };
 		1F5CF0D3894D4FC1B84CF0F527D0D766 /* EXPMatchers+beSubclassOf.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "EXPMatchers+beSubclassOf.h"; path = "Expecta/Matchers/EXPMatchers+beSubclassOf.h"; sourceTree = "<group>"; };
 		1F9EE98E21A0C637A4E0FE3B6F402DAD /* Expecta.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = Expecta.h; path = Expecta/Expecta.h; sourceTree = "<group>"; };
-		224147F31C3F5F9A0033178C /* CALayer+SMWUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CALayer+SMWUtility.h"; sourceTree = "<group>"; };
-		224147F41C3F5F9A0033178C /* CALayer+SMWUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CALayer+SMWUtility.m"; sourceTree = "<group>"; };
 		224148411C4081290033178C /* SMWDisplayLink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMWDisplayLink.h; sourceTree = "<group>"; };
 		224148421C4081290033178C /* SMWDisplayLink.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SMWDisplayLink.mm; sourceTree = "<group>"; };
 		2499EDF4CE48DC7D295875D373CE6ACB /* NSValue+Expecta.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSValue+Expecta.m"; path = "Expecta/NSValue+Expecta.m"; sourceTree = "<group>"; };
@@ -389,8 +385,6 @@
 		00DD701FA0185A6D06E8EEDDEB849ED6 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				224147F31C3F5F9A0033178C /* CALayer+SMWUtility.h */,
-				224147F41C3F5F9A0033178C /* CALayer+SMWUtility.m */,
 				CEFAFE84169E71D255F15AFD21D434A5 /* CATransaction+SMWUtility.h */,
 				55DCA0960052614C158A7072F6285101 /* CATransaction+SMWUtility.m */,
 			);
@@ -780,7 +774,6 @@
 				3E9014109A91E78E1F4B637A975057ED /* SMWTimerBar.h in Headers */,
 				63777669031F05031BFC7CEC08FF09F0 /* SMWTimerBarSection.h in Headers */,
 				0E13483560AE0463EF94C9EF0F00C32C /* SMWTimerBarView.h in Headers */,
-				224147F51C3F5F9A0033178C /* CALayer+SMWUtility.h in Headers */,
 				224148431C4081290033178C /* SMWDisplayLink.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1046,7 +1039,6 @@
 				6BC7EC99BCF9E77394521DA012E81E87 /* SMWTimerBarSection.m in Sources */,
 				38732E0F93B62616609C374672D883D6 /* SMWTimerBarView.m in Sources */,
 				224148441C4081290033178C /* SMWDisplayLink.mm in Sources */,
-				224147F61C3F5F9A0033178C /* CALayer+SMWUtility.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

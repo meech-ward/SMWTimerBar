@@ -10,7 +10,6 @@
 #import "SMWTimerBarView.h"
 
 #import "CATransaction+SMWUtility.h"
-#import "CALayer+SMWUtility.h"
 
 @interface SMWTimerBarSection()
 

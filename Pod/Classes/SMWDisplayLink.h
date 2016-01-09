@@ -11,6 +11,8 @@
 /// A block that should be called upon each interval.
 typedef void (^SMWDisplayLinkStep)(CGFloat percentComplete);
 
+@protocol SMWDisplayLinkDelegate;
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SMWDisplayLink : NSObject
@@ -40,8 +42,23 @@ NS_ASSUME_NONNULL_BEGIN
 /// Stop the animation timer.
 - (void)stopTimer;
 
+/// Pause the animation timer.
+- (void)pauseTimer;
+
+/// Resume the animation timer.
+- (void)resumeTimer;
+
 /// Fast forward the animation by a certain number of seconds.
 - (void)fastForward:(CFTimeInterval)duration animated:(BOOL)animated;
+
+@property (weak, nonatomic) id <SMWDisplayLinkDelegate> delegate;
+
+@end
+
+@protocol SMWDisplayLinkDelegate <NSObject>
+
+/// Called when the animation duration is met.
+- (void)displayLink:(SMWDisplayLink *)displayLink didCompleteAnimationWithDuration:(CFTimeInterval)duration;
 
 @end
 

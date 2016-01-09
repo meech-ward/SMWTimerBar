@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@class SMWTimerBarSection;
+@class SMWTimerBarSection, SMWDisplayLink;
 @protocol SMWTimerBarViewDelegate;
 
 typedef NS_ENUM(NSUInteger, SMWTimerBarViewState) {
@@ -62,6 +62,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// @name Timer
 
+/// The timer used for the animations.
+@property (strong, nonatomic, readonly) SMWDisplayLink *timer;
+
 /// The total countdown time, in seconds.
 @property (nonatomic) NSTimeInterval time;
 
@@ -80,6 +83,8 @@ NS_ASSUME_NONNULL_BEGIN
 /// Stop any of the section animations.
 - (void)stopAnimations;
 
+/// YES when the timer is pause, NO otherwise
+@property (nonatomic, readonly, getter=isPaused) BOOL paused;
 
 /// @name Protocols
 

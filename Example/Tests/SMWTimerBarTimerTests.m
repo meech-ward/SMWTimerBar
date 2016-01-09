@@ -10,7 +10,10 @@
 #import <Expecta/Expecta.h>
 #import <SMWTimerBar/SMWTimerBarView.h>
 #import <SMWTimerBar/SMWTimerBarSection.h>
+//#import <SMWTimerBar/SMWDisplayLink.h>
 #import "SMWTimerBarViewDelegateMockObject.h"
+
+@class SMWDisplayLink;
 
 SpecBegin(TimerBarTimer)
 
@@ -39,7 +42,10 @@ describe(@"Timer bar timing", ^{
         
         it(@"will be animating", ^{
             expect(barView.state).to.equal(SMWTimerBarViewStateAnimating);
-            expect(barView.animatingSection.timerLayer.speed).to.equal(1.0);
+            SMWDisplayLink *displayLink = barView.timer;
+            CADisplayLink *timer = [(NSObject *)displayLink valueForKey:@"timer"];
+            expect(timer).toNot.equal(nil);
+            expect(barView.isPaused).to.equal(NO);
         });
         
         describe(@"when pausing and un pausing", ^{
@@ -49,15 +55,7 @@ describe(@"Timer bar timing", ^{
             });
             
             it(@"will be able to be paused", ^{
-                expect(barView.animatingSection.timerLayer.speed).to.equal(0.0);
-                
-                for (SMWTimerBarSection *section in barView.sections) {
-                    expect(section.timerLayer.speed).to.equal(0.0);
-                }
-                
-                expect(barView.sections[0].timerLayer.speed).to.equal(0.0);
-                expect(barView.sections[1].timerLayer.speed).to.equal(0.0);
-                expect(barView.sections[2].timerLayer.speed).to.equal(0.0);
+                expect(barView.isPaused).to.equal(YES);
                 
                 expect(barView.state).to.equal(SMWTimerBarViewStatePaused);
             });
@@ -65,7 +63,7 @@ describe(@"Timer bar timing", ^{
             it(@"will be able to be un paused", ^{
                 [barView resumeAnimations];
                 expect(barView.state).to.equal(SMWTimerBarViewStateAnimating);
-                expect(barView.animatingSection.timerLayer.speed).to.equal(1.0);
+                expect(barView.isPaused).to.equal(NO);
                 
             });
         });

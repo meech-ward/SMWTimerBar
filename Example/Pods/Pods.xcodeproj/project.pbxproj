@@ -31,7 +31,7 @@
 		204D694B03BFF3B244A6AB73FACFFC43 /* Expecta-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = FD3A245D75F8D2D0FFAD5230F5925974 /* Expecta-dummy.m */; };
 		224147F51C3F5F9A0033178C /* CALayer+SMWUtility.h in Headers */ = {isa = PBXBuildFile; fileRef = 224147F31C3F5F9A0033178C /* CALayer+SMWUtility.h */; };
 		224147F61C3F5F9A0033178C /* CALayer+SMWUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 224147F41C3F5F9A0033178C /* CALayer+SMWUtility.m */; };
-		224148431C4081290033178C /* SMWDisplayLink.h in Headers */ = {isa = PBXBuildFile; fileRef = 224148411C4081290033178C /* SMWDisplayLink.h */; };
+		224148431C4081290033178C /* SMWDisplayLink.h in Headers */ = {isa = PBXBuildFile; fileRef = 224148411C4081290033178C /* SMWDisplayLink.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		224148441C4081290033178C /* SMWDisplayLink.mm in Sources */ = {isa = PBXBuildFile; fileRef = 224148421C4081290033178C /* SMWDisplayLink.mm */; };
 		260BC7EED9289AF321A6F791964CE472 /* EXPMatchers+respondTo.h in Headers */ = {isa = PBXBuildFile; fileRef = 82018E76DBBAA11465301FB7614DA196 /* EXPMatchers+respondTo.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2916A0606136A9DC67F2463AB230868B /* EXPMatchers+match.h in Headers */ = {isa = PBXBuildFile; fileRef = 36BB29C27B61C055294A8316529A8EF8 /* EXPMatchers+match.h */; settings = {ATTRIBUTES = (Public, ); }; };

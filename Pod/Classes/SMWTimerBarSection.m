@@ -94,75 +94,10 @@
     [self.imageView removeFromSuperview];
 }
 
-
-#pragma mark -
-#pragma mark - Animation
-
-- (void)animateTimerLayerWithDuration:(NSTimeInterval)time key:(NSString *)key completion:(void(^)(BOOL flag))completion {
-    
-    // Check a key exists
-    if (!key || key.length == 0) {
-        key = @"timer_size_animation";
-    }
-    
-    // Animate
-    [CATransaction begin];
-    [CATransaction setAnimationDuration:time];
-    [CATransaction setCompletionBlock:^{
-        
-        CABasicAnimation *layerSizeAnimation = (CABasicAnimation *)[self.timerLayer animationForKey:key];
-        if (layerSizeAnimation) {
-            // Set the timerlayer's final state
-            [CATransaction smw_unanimateBlock:^{
-                self.timerLayer.bounds = [layerSizeAnimation.toValue CGRectValue];
-                [self.timerLayer removeAnimationForKey:key];
-            }];
-        }
-        
-        if (completion) {
-            completion(layerSizeAnimation != nil);
-        }
-    }];
-    
-    [self addTimerAnimationWithKey:key];
-    
-    [CATransaction commit];
-}
-
-- (void)addTimerAnimationWithKey:(NSString *)key {
-    
-    CABasicAnimation *layerSizeAnimation = [CABasicAnimation animationWithKeyPath:@"bounds"];
-    layerSizeAnimation.fromValue = [NSValue valueWithCGRect:CGRectMake(0, 0, CGRectGetWidth(self.frame), CGRectGetHeight(self.frame))];
-    layerSizeAnimation.toValue = [NSValue valueWithCGRect:CGRectMake(0, 0, 0, CGRectGetHeight(self.frame))];
-    
-    layerSizeAnimation.removedOnCompletion = NO;
-    layerSizeAnimation.fillMode = kCAFillModeBoth;
-    
-    [self.timerLayer addAnimation:layerSizeAnimation forKey:key];
-}
-
-- (void)pauseAnimations {
-    [_timerLayer pauseAnimations];
-}
-
-- (void)resumeAniamtions {
-    [_timerLayer resumeAniamtions];
-}
-
-- (void)stopAnimations {
-    [_timerLayer removeAllAnimations];
-    [self reset];
-}
-
 #pragma mark -
 #pragma mark - Reset
 
 - (void)reset {
-    // Remove any animation
-    [_backgroundLayer removeAllAnimations];
-    [_timerLayer removeAllAnimations];
-    [_dividerLayer removeAllAnimations];
-    
     // Reset the frames
     self.frameUpdateTimes = 0;
     [CATransaction smw_unanimateBlock:^{

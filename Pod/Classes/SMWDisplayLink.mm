@@ -96,6 +96,9 @@
     
     // Stop the timer if we've reached the end
     if (_currentDuration >= _duration) {
+        if ([_delegate respondsToSelector:@selector(displayLink:didCompleteAnimationWithDuration:)]) {
+            [_delegate displayLink:self didCompleteAnimationWithDuration:_duration];
+        }
         [self stopTimer];
     }
 }
@@ -103,6 +106,15 @@
 - (void)stopTimer {
     [_timer invalidate];
     self.timer = nil;
+}
+
+- (void)pauseTimer {
+    _timer.paused = YES;
+}
+
+- (void)resumeTimer {
+    _lastStep = CACurrentMediaTime();
+    _timer.paused = NO;
 }
 
 - (void)fastForward:(CFTimeInterval)duration animated:(BOOL)animated {

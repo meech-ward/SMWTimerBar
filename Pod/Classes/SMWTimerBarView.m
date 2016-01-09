@@ -16,7 +16,6 @@
 
 @interface SMWTimerBarView() <SMWDisplayLinkDelegate> {
     CGRect _lastFrame;
-    CGFloat _incrementWidth;
 }
 
 @property (strong, nonatomic) NSArray<SMWTimerBarSection *> *sections;
@@ -54,16 +53,7 @@
     [self setUpTimer];
 }
 
-- (void)setUpTimer {
-    __weak SMWTimerBarView *weakSelf = self;
-    self.timer = [[SMWDisplayLink alloc] initWithDuration:_time
-                                            frameInterval:1
-                                                stepBlock:^(CGFloat percentComplete) {
-                                                    [weakSelf step:percentComplete];
-                                                }
-                                             runLoopModes:@[NSDefaultRunLoopMode]];
-    _timer.delegate = self;
-}
+
 
 - (void)setFrame:(CGRect)frame {
     [super setFrame:frame];
@@ -101,10 +91,6 @@
     self.state = SMWTimerBarViewStateNormal;
 }
 
-- (void)setTime:(NSTimeInterval)time {
-    _time = time;
-    _timer.duration = time;
-}
 
 #pragma mark -
 #pragma mark - Sections
@@ -217,31 +203,17 @@
 #pragma mark - Animation
 
 - (void)startAnimating {
-    // Divide the time between the sections
-    NSTimeInterval sectionTime = _time/_numberOfSections;
-//
-//    // Get the amount of width that will be taken off at each incrment
-    CGFloat sectionWidth = CGRectGetWidth(_sections[0].frame);
-    _incrementWidth = sectionWidth/(60*sectionTime);
-    
     // Start the timer
     [_timer startTimer];
     
     self.state = SMWTimerBarViewStateAnimating;
 }
 
-- (void)step:(CGFloat)percentComplete {
-    // Determine the currently animating section
-    if (percentComplete == 0 || isnan(percentComplete)) {
-        return;
-    }
-    double eachSectionPercent = 100.0/_sections.count;
-    NSInteger index = floor(percentComplete/eachSectionPercent);
-    NSInteger currentSectionIndex = _sections.count - (index + 1);
-    if (currentSectionIndex < 0) {
-        return;
-    }
-    SMWTimerBarSection *currentSection = _sections[currentSectionIndex];
+- (void)checkAnimatingSectionChange:(NSInteger)sectionIndex {
+    SMWTimerBarSection *currentSection = _sections[sectionIndex];
+    
+    // Check for when the sections change
+    
     if (!_animatingSection || ![currentSection isEqual:_animatingSection]) {
         // New Section
         
@@ -252,25 +224,44 @@
         
         // Delegate
         if (_animatingSection && [_delegate respondsToSelector:@selector(timerBarView:didCountdownSection:)]) {
-            [_delegate timerBarView:self didCountdownSection:currentSectionIndex+1];
+            [_delegate timerBarView:self didCountdownSection:sectionIndex+1];
         }
         self.animatingSection = currentSection;
         if ([_delegate respondsToSelector:@selector(timerBarView:willCountdownSection:)]) {
-            [_delegate timerBarView:self willCountdownSection:currentSectionIndex];
+            [_delegate timerBarView:self willCountdownSection:sectionIndex];
         }
     }
+}
+
+- (void)step:(CGFloat)percentComplete time:(NSTimeInterval)timeComplete {
     
+    if (percentComplete == 0 || isnan(percentComplete)) {
+        return;
+    }
+    if (timeComplete == 0 || isnan(timeComplete)) {
+        return;
+    }
     
-    // Get the percent of that section
-    double currentSectionPercent = (percentComplete-(eachSectionPercent*(index)))*_sections.count;
-    
-//    NSLog(@"section: %li, sectionPercent: %f, totalPercent: %f", (long)currentSectionIndex, currentSectionPercent, percentComplete);
-    
-    // Update the frame
-    CGFloat sectionWidth = CGRectGetWidth(currentSection.frame);
-    sectionWidth = sectionWidth-(sectionWidth*currentSectionPercent/100.0);
-    [CATransaction smw_unanimateBlock:^{
-        currentSection.timerLayer.frame = CGRectMake(CGRectGetMinX(currentSection.frame), CGRectGetMinY(currentSection.frame), sectionWidth, CGRectGetHeight(currentSection.frame));
+    __block double currentSectionRange = 0;
+    __block NSTimeInterval currentTime = timeComplete;
+    [_sections enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(SMWTimerBarSection * _Nonnull section, NSUInteger idx, BOOL * _Nonnull stop) {
+        if (currentTime >= section.time) {
+            currentTime-=section.time;
+            return;
+        }
+        
+        [self checkAnimatingSectionChange:idx];
+        
+        currentSectionRange = currentTime/section.time;
+        
+        // Update the frame
+        CGFloat sectionWidth = CGRectGetWidth(section.frame);
+        sectionWidth = sectionWidth-(sectionWidth*currentSectionRange);
+        [CATransaction smw_unanimateBlock:^{
+            section.timerLayer.frame = CGRectMake(CGRectGetMinX(section.frame), CGRectGetMinY(section.frame), sectionWidth, CGRectGetHeight(section.frame));
+        }];
+        
+        *stop = YES;
     }];
 }
 
@@ -302,14 +293,57 @@
     return _timer.timer.isPaused;
 }
 
-- (void)fastForward:(CFTimeInterval)duration animated:(BOOL)animated {
+- (void)fastForward:(NSTimeInterval)duration animated:(BOOL)animated {
     [_timer fastForward:duration animated:animated];
+}
+
+#pragma mark -
+#pragma mark - Timer
+
+- (void)setUpTimer {
+    __weak SMWTimerBarView *weakSelf = self;
+    self.timer = [[SMWDisplayLink alloc] initWithDuration:self.totalTime
+                                            frameInterval:6
+                                             runLoopModes:@[NSDefaultRunLoopMode]];
+    _timer.delegate = self;
+    _timer.stepBlock = ^(CGFloat percentComplete, CFTimeInterval timeComplete) {
+        [weakSelf step:percentComplete time:timeComplete];
+    };
+}
+- (void)setTimes:(NSArray<NSNumber *> *)times {
+    _times = times;
+    [self updateTimes];
+    _timer.duration = self.totalTime;
+}
+
+- (void)updateTimes {
+    int timeIndex = 0;
+    for (int i = 0; i < _numberOfSections; ++i) {
+        // Get the section view
+        SMWTimerBarSection *section = _sections[i];
+        
+        // Get the time
+        NSNumber *time = _times[timeIndex];
+        timeIndex = timeIndex >= _times.count-1 ? 0 : timeIndex+1;
+        
+        // Set the image
+        section.time = [time doubleValue];
+    }
+}
+
+
+- (NSTimeInterval)totalTime {
+    NSTimeInterval time = 0;
+    for (SMWTimerBarSection *section in _sections) {
+        time+=section.time;
+    }
+    return time;
 }
 
 #pragma mark -
 #pragma mark - Timer Delegate
 
-- (void)displayLink:(SMWDisplayLink *)displayLink didCompleteAnimationWithDuration:(CFTimeInterval)duration {
+- (void)displayLink:(SMWDisplayLink *)displayLink didCompleteAnimationWithDuration:(NSTimeInterval)duration {
     self.state = SMWTimerBarViewStateCompletedAnimation;
     self.animatingSection = nil;
     

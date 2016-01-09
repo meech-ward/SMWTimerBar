@@ -9,7 +9,7 @@
 #import <QuartzCore/QuartzCore.h>
 
 /// A block that should be called upon each interval.
-typedef void (^SMWDisplayLinkStep)(CGFloat percentComplete);
+typedef void (^SMWDisplayLinkStep)(CGFloat percentComplete, CFTimeInterval timeComplete);
 
 @protocol SMWDisplayLinkDelegate;
 
@@ -25,7 +25,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param runLoopModes An array of the run loop modes to add the timer to.
  @return A new SMWDisplayLink instance.
  */
-- (instancetype)initWithDuration:(CFTimeInterval)duration frameInterval:(NSInteger)frameInterval stepBlock:(nullable SMWDisplayLinkStep)stepBlock runLoopModes:(nullable NSArray<NSString *> *)runLoopModes NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithDuration:(CFTimeInterval)duration frameInterval:(NSInteger)frameInterval runLoopModes:(nullable NSArray<NSString *> *)runLoopModes NS_DESIGNATED_INITIALIZER;
 
 /// The CADisplayLink that controls the timing.
 @property (strong, nonatomic, readonly, nullable) CADisplayLink *timer;

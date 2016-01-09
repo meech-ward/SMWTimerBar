@@ -35,7 +35,7 @@ describe(@"Timer bar timing", ^{
             sectionFrame = CGRectMake(0, 0, 30.0, 10.0);
             barView = [[SMWTimerBarView alloc] initWithFrame:CGRectZero numberOfSections:3];
             barSection = [[SMWTimerBarSection alloc] initWithFrame:sectionFrame barView:barView];
-            barView.time = 9;
+            barView.times = @[@1, @2, @3];
             [barView startAnimating];
         });
 
@@ -88,7 +88,7 @@ describe(@"Timer bar timing", ^{
                     // Setup the bar
                     NSInteger numberOfSections = 3;
                     SMWTimerBarView *bar = [[SMWTimerBarView alloc] initWithFrame:CGRectMake(0, 0, 300.0, 50.0) numberOfSections:numberOfSections];
-                    bar.time = 3;
+                    bar.times = @[@1];
                     
                     // Setup the mock
                     SMWTimerBarViewDelegateMockObject *delegateMock = [[SMWTimerBarViewDelegateMockObject alloc] initWithBarView:bar];
@@ -98,7 +98,7 @@ describe(@"Timer bar timing", ^{
                     // Make sure the delegate method is called
                     __block NSInteger sectionsLeft = numberOfSections;
                     [delegateMock setWillCountdownSection:^(NSInteger section) {
-                        NSLog(@"expect(%li).to.equal(%li)", (long)section, sectionsLeft-1);
+                        NSLog(@"will countdown expect(%li).to.equal(%li)", (long)section, sectionsLeft-1);
                         expect(section).to.equal(sectionsLeft-1);
                         expect(bar.animatingSection).to.equal(bar.sections[section]);
                         if (--sectionsLeft == 0) {
@@ -117,7 +117,7 @@ describe(@"Timer bar timing", ^{
                     // Setup the bar
                     NSInteger numberOfSections = 3;
                     SMWTimerBarView *bar = [[SMWTimerBarView alloc] initWithFrame:CGRectMake(0, 0, 300.0, 50.0) numberOfSections:numberOfSections];
-                    bar.time = 3;
+                    bar.times = @[@1];
                     
                     // Setup the mock
                     SMWTimerBarViewDelegateMockObject *delegateMock = [[SMWTimerBarViewDelegateMockObject alloc] initWithBarView:bar];
@@ -143,7 +143,7 @@ describe(@"Timer bar timing", ^{
                     // Setup the bar
                     NSInteger numberOfSections = 3;
                     SMWTimerBarView *bar = [[SMWTimerBarView alloc] initWithFrame:CGRectMake(0, 0, 300.0, 50.0) numberOfSections:numberOfSections];
-                    bar.time = 3;
+                    bar.times = @[@1];
                     
                     // Setup the mock
                     SMWTimerBarViewDelegateMockObject *delegateMock = [[SMWTimerBarViewDelegateMockObject alloc] initWithBarView:bar];
@@ -167,7 +167,7 @@ describe(@"Timer bar timing", ^{
             waitUntil(^(DoneCallback done) {
                 // Setup the bar
                 SMWTimerBarView *bar = [[SMWTimerBarView alloc] initWithFrame:CGRectMake(0, 0, 300.0, 50.0) numberOfSections:3];
-                bar.time = 3;
+                bar.times = @[@1];
                 
                 // Setup the mock
                 SMWTimerBarViewDelegateMockObject *delegateMock = [[SMWTimerBarViewDelegateMockObject alloc] initWithBarView:bar];
@@ -191,9 +191,9 @@ describe(@"Timer bar timing", ^{
                 // Setup the bar
                 NSInteger numberOfSections = 3;
                 SMWTimerBarView *bar = [[SMWTimerBarView alloc] initWithFrame:CGRectMake(0, 0, 300.0, 50.0) numberOfSections:numberOfSections];
-                bar.time = 3;
+                bar.times = @[@1];
                 SMWTimerBarView *barCopy = [[SMWTimerBarView alloc] initWithFrame:CGRectMake(0, 0, 300.0, 50.0) numberOfSections:numberOfSections];
-                barCopy.time = 3;
+                barCopy.times = @[@1];
                 
                 // Setup the mock
                 SMWTimerBarViewDelegateMockObject *delegateMock = [[SMWTimerBarViewDelegateMockObject alloc] initWithBarView:bar];

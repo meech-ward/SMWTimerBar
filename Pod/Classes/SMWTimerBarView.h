@@ -65,8 +65,11 @@ NS_ASSUME_NONNULL_BEGIN
 /// The timer used for the animations.
 @property (strong, nonatomic, readonly) SMWDisplayLink *timer;
 
-/// The total countdown time, in seconds.
-@property (nonatomic) NSTimeInterval time;
+/// The countdown time of each segment.
+@property (strong, nonatomic) NSArray<NSNumber *> *times;
+
+/// The total time of all segments
+@property (nonatomic, readonly) NSTimeInterval totalTime;
 
 /// YES when the bar is animating its countdown. NO otherwise.
 @property (nonatomic) SMWTimerBarViewState state;
@@ -84,7 +87,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)stopAnimations;
 
 /// Fast forward the animation by a certain number of seconds.
-- (void)fastForward:(CFTimeInterval)duration animated:(BOOL)animated;
+- (void)fastForward:(NSTimeInterval)duration animated:(BOOL)animated;
 
 /// YES when the timer is pause, NO otherwise
 @property (nonatomic, readonly, getter=isPaused) BOOL paused;

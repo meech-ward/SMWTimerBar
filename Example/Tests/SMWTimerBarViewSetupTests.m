@@ -60,6 +60,50 @@ describe(@"Timer bar view", ^{
         });
     });
     
+    
+    describe(@"when updating section times with the same number of sections", ^{
+        
+        __block SMWTimerBarView *barView;
+        const int numberOfBarSections = 5;
+        NSArray<NSNumber *> *times = @[@1,@2,@3,@4,@5];
+        
+        beforeAll(^{
+            barView = [[SMWTimerBarView alloc] initWithFrame:CGRectZero numberOfSections:numberOfBarSections];
+            barView.times = times;
+        });
+        
+        it(@"will have each section with the same correct time", ^{
+            for (int i = 0; i < numberOfBarSections; ++i) {
+                SMWTimerBarSection *section = barView.sections[i];
+                NSNumber *number = times[i];
+                expect(section.time).to.equal([number doubleValue]);
+            }
+        });
+    });
+    
+    describe(@"when updating section times with a smaller number of sections", ^{
+        
+        __block SMWTimerBarView *barView;
+        const int numberOfBarSections = 5;
+        NSArray<NSNumber *> *times = @[@1,@2,@3,@4,@5];
+        
+        beforeAll(^{
+            barView = [[SMWTimerBarView alloc] initWithFrame:CGRectZero numberOfSections:numberOfBarSections];
+            barView.times = times;
+        });
+        
+        it(@"will have each section with the same correct time", ^{
+            int timeIndex = 0;
+            for (int i = 0; i < numberOfBarSections; ++i) {
+                SMWTimerBarSection *section = barView.sections[i];
+                NSNumber *number = times[timeIndex];
+                expect(section.time).to.equal([number doubleValue]);
+                timeIndex = timeIndex >= times.count-1 ? 0 : timeIndex+1;
+            }
+        });
+    });
+
+    
     describe(@"when updating appearance", ^{
         
         __block SMWTimerBarView *barView;

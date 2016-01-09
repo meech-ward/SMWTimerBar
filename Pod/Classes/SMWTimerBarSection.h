@@ -37,6 +37,8 @@ NS_ASSUME_NONNULL_BEGIN
 /// The frame of the section.
 @property (nonatomic) CGRect frame;
 
+/// The duration of the animation for this section.
+@property (nonatomic) NSTimeInterval time;
 
 /// Remove the current section layers from the bar view.
 - (void)removeFromBar;

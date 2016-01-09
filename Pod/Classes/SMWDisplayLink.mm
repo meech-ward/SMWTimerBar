@@ -34,14 +34,13 @@
 @synthesize duration = _duration;
 
 - (instancetype)init {
-    return [self initWithDuration:0.0 frameInterval:1 stepBlock:nil runLoopModes:nil];
+    return [self initWithDuration:0.0 frameInterval:1 runLoopModes:nil];
 }
 
-- (instancetype)initWithDuration:(CFTimeInterval)duration frameInterval:(NSInteger)frameInterval stepBlock:(SMWDisplayLinkStep)stepBlock runLoopModes:(NSArray<NSString *> *)runLoopModes {
+- (instancetype)initWithDuration:(CFTimeInterval)duration frameInterval:(NSInteger)frameInterval runLoopModes:(NSArray<NSString *> *)runLoopModes {
     self = [super init];
     if (self) {
         self.duration = duration;
-        self.stepBlock = stepBlock;
         self.runLoopModes = runLoopModes;
         self.frameInterval = frameInterval;
     }
@@ -91,7 +90,7 @@
     
     // Perform animation updates
     if (_stepBlock) {
-        _stepBlock(percent);
+        _stepBlock(percent, _currentDuration);
     }
     
     // Stop the timer if we've reached the end

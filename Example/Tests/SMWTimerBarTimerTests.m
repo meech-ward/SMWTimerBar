@@ -98,6 +98,7 @@ describe(@"Timer bar timing", ^{
                     // Make sure the delegate method is called
                     __block NSInteger sectionsLeft = numberOfSections;
                     [delegateMock setWillCountdownSection:^(NSInteger section) {
+                        NSLog(@"expect(%li).to.equal(%li)", (long)section, sectionsLeft-1);
                         expect(section).to.equal(sectionsLeft-1);
                         expect(bar.animatingSection).to.equal(bar.sections[section]);
                         if (--sectionsLeft == 0) {
@@ -125,6 +126,7 @@ describe(@"Timer bar timing", ^{
                     // Make sure the delegate method is called
                     __block NSInteger sectionsLeft = numberOfSections;
                     [delegateMock setDidCountdownSection:^(NSInteger section) {
+                        NSLog(@"expect(%li).to.equal(%li)", (long)section, sectionsLeft-1);
                         expect(section).to.equal(sectionsLeft-1);
                         if (--sectionsLeft == 0) {
                             done();

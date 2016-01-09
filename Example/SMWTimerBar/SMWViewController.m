@@ -54,6 +54,9 @@
     }
 }
 
+- (IBAction)fastForward:(id)sender {
+    [_timerBar fastForward:2.0 animated:YES];
+}
 
 #pragma mark -
 #pragma mark - Delegate

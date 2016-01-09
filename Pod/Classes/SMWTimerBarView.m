@@ -57,7 +57,7 @@
 - (void)setUpTimer {
     __weak SMWTimerBarView *weakSelf = self;
     self.timer = [[SMWDisplayLink alloc] initWithDuration:_time
-                                            frameInterval:10
+                                            frameInterval:1
                                                 stepBlock:^(CGFloat percentComplete) {
                                                     [weakSelf step:percentComplete];
                                                 }
@@ -228,7 +228,6 @@
     [_timer startTimer];
     
     self.state = SMWTimerBarViewStateAnimating;
-    self.animatingSection = self.sections.lastObject;
 }
 
 - (void)step:(CGFloat)percentComplete {
@@ -239,11 +238,11 @@
     double eachSectionPercent = 100.0/_sections.count;
     NSInteger index = floor(percentComplete/eachSectionPercent);
     NSInteger currentSectionIndex = _sections.count - (index + 1);
-    if (currentSectionIndex >= _sections.count || currentSectionIndex < 0) {
+    if (currentSectionIndex < 0) {
         return;
     }
     SMWTimerBarSection *currentSection = _sections[currentSectionIndex];
-    if (![currentSection isEqual:_animatingSection]) {
+    if (!_animatingSection || ![currentSection isEqual:_animatingSection]) {
         // New Section
         
         // Finish the last section
@@ -265,7 +264,7 @@
     // Get the percent of that section
     double currentSectionPercent = (percentComplete-(eachSectionPercent*(index)))*_sections.count;
     
-    NSLog(@"section: %li, sectionPercent: %f, totalPercent: %f", (long)currentSectionIndex, currentSectionPercent, percentComplete);
+//    NSLog(@"section: %li, sectionPercent: %f, totalPercent: %f", (long)currentSectionIndex, currentSectionPercent, percentComplete);
     
     // Update the frame
     CGFloat sectionWidth = CGRectGetWidth(currentSection.frame);
@@ -303,6 +302,10 @@
     return _timer.timer.isPaused;
 }
 
+- (void)fastForward:(CFTimeInterval)duration animated:(BOOL)animated {
+    [_timer fastForward:duration animated:animated];
+}
+
 #pragma mark -
 #pragma mark - Timer Delegate
 
@@ -310,7 +313,7 @@
     self.state = SMWTimerBarViewStateCompletedAnimation;
     self.animatingSection = nil;
     
-    if (_animatingSection && [_delegate respondsToSelector:@selector(timerBarView:didCountdownSection:)]) {
+    if ([_delegate respondsToSelector:@selector(timerBarView:didCountdownSection:)]) {
         [_delegate timerBarView:self didCountdownSection:0];
     }
     if ([_delegate respondsToSelector:@selector(timerBarViewDidFinishCountdown:)]) {

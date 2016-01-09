@@ -83,6 +83,9 @@ NS_ASSUME_NONNULL_BEGIN
 /// Stop any of the section animations.
 - (void)stopAnimations;
 
+/// Fast forward the animation by a certain number of seconds.
+- (void)fastForward:(CFTimeInterval)duration animated:(BOOL)animated;
+
 /// YES when the timer is pause, NO otherwise
 @property (nonatomic, readonly, getter=isPaused) BOOL paused;
 

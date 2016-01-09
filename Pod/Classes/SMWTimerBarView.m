@@ -209,6 +209,12 @@
     self.state = SMWTimerBarViewStateAnimating;
 }
 
+- (void)finishAnimatingSection {
+    [CATransaction smw_unanimateBlock:^{
+        _animatingSection.timerLayer.frame = CGRectMake(CGRectGetMinX(_animatingSection.frame), CGRectGetMinY(_animatingSection.frame), 0, CGRectGetHeight(_animatingSection.frame));
+    }];
+}
+
 - (void)checkAnimatingSectionChange:(NSInteger)sectionIndex {
     SMWTimerBarSection *currentSection = _sections[sectionIndex];
     
@@ -218,9 +224,7 @@
         // New Section
         
         // Finish the last section
-        [CATransaction smw_unanimateBlock:^{
-            _animatingSection.timerLayer.frame = CGRectMake(CGRectGetMinX(_animatingSection.frame), CGRectGetMinY(_animatingSection.frame), 0, CGRectGetHeight(_animatingSection.frame));
-        }];
+        [self finishAnimatingSection];
         
         // Delegate
         if (_animatingSection && [_delegate respondsToSelector:@selector(timerBarView:didCountdownSection:)]) {
@@ -303,7 +307,7 @@
 - (void)setUpTimer {
     __weak SMWTimerBarView *weakSelf = self;
     self.timer = [[SMWDisplayLink alloc] initWithDuration:self.totalTime
-                                            frameInterval:6
+                                            frameInterval:1
                                              runLoopModes:@[NSDefaultRunLoopMode]];
     _timer.delegate = self;
     _timer.stepBlock = ^(CGFloat percentComplete, CFTimeInterval timeComplete) {
@@ -344,6 +348,8 @@
 #pragma mark - Timer Delegate
 
 - (void)displayLink:(SMWDisplayLink *)displayLink didCompleteAnimationWithDuration:(NSTimeInterval)duration {
+    [self finishAnimatingSection];
+    
     self.state = SMWTimerBarViewStateCompletedAnimation;
     self.animatingSection = nil;
     
